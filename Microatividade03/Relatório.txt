@@ -1,0 +1,25 @@
+Para implementar as mudanças necessárias no código, adicionamos:
+
+Um campo de data de expiração no token JWT.
+
+Validação do token e tratamento de erros genéricos no backend.
+
+No frontend, verificação da validade do token antes de enviá-lo e redirecionamento para a página de login se expirado.
+
+1. Código Backend com Validação de Expiração do Token
+2. Código Frontend com Verificação de Expiração
+
+Explicação das Mudanças
+
+Backend:
+
+A função do_Login gera um token JWT com o campo exp (data de expiração) no payload.
+A função validateToken verifica a validade do token e retorna uma resposta de erro genérica em caso de token inválido ou expirado.
+
+Frontend:
+
+O token e sua data de expiração são salvos no localStorage.
+Antes de fazer uma requisição protegida, a função isTokenValid verifica se o token ainda é válido com base na data de expiração.
+Se o token estiver expirado, o usuário é redirecionado para a página de login.
+
+Esse fluxo protege a aplicação contra tokens expirados e trata o processo de autenticação de forma mais segura.

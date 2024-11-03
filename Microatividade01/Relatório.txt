@@ -1,0 +1,15 @@
+Relatório do Código
+
+Middleware de Autenticação:
+
+A função authenticate verifica o cabeçalho Authorization para encontrar o token de autenticação.
+Se o token está presente e corresponde ao esperado (Bearer my_secure_token), a requisição é passada para o próximo manipulador com next().
+Se o token está ausente ou é inválido, o middleware responde com uma mensagem "Não autorizado" e status HTTP 401.
+
+Proteção do Endpoint:
+
+O middleware authenticate é incluído na rota /confidential-data, garantindo que apenas solicitações autenticadas possam acessar os dados.
+Configuração do Servidor:
+
+O servidor é configurado para rodar na porta 3000.
+Esse código ilustra um controle de acesso simples e demonstra o entendimento básico de autenticação em APIs, um requisito fundamental para proteger endpoints REST.

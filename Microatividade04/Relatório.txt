@@ -1,0 +1,17 @@
+Relatório das Mudanças
+
+1. Conexão Segura:
+
+O código se conecta ao banco de dados usando mysql2 e prepara uma consulta segura.
+
+2. Consulta Parametrizada:
+
+A consulta SQL foi alterada para SELECT * FROM users WHERE userID = ?, onde o ? representa um parâmetro seguro.
+A função connection.execute() substitui o ? pelo valor de id de forma segura, impedindo que o valor seja interpretado como código SQL.
+
+3. Proteção Contra SQL Injection:
+
+Mesmo se o invasor tentar enviar uma string como id=' OR '1'='1--, o banco de dados não interpretará isso como código SQL. Em vez disso, será tratado como um valor literal para userID, protegendo o banco de dados contra SQL Injection.
+
+Considerações Finais
+Esse código agora é seguro contra ataques de SQL Injection, pois utiliza consultas parametrizadas. Ao usar a biblioteca mysql2 ou outras bibliotecas que suportam esse tipo de consulta, você garante que os valores dos parâmetros sejam tratados corretamente, evitando a execução de código SQL malicioso.

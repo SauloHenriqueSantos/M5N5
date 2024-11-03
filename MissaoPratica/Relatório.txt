@@ -1,0 +1,36 @@
+
+
+Relatório do Código Refatorado
+
+1. **Token JWT no Login**: No endpoint `/api/auth/login`, o sistema gera um **token JWT** quando o usuário realiza login com sucesso. Esse token é enviado no cabeçalho `Authorization` das requisições subsequentes.
+2. **Validação do Token JWT**: O middleware `authenticateToken` valida o token JWT presente no cabeçalho de cada requisição. Se o token for inválido ou expirado, a requisição é rejeitada.
+3. **Controle de Acesso Baseado no Perfil**:
+   - No endpoint `/api/users`, apenas usuários com perfil `admin` podem acessar os dados de todos os usuários.
+   - No endpoint `/api/contracts/:empresa/:inicio`, somente usuários `admin` podem acessar contratos. 
+   - O endpoint `/api/auth/me` permite que qualquer usuário logado recupere seus próprios dados.
+4. **Sanitização de Entrada**: A função `sanitizeInput` remove caracteres especiais dos parâmetros `empresa` e `inicio` para evitar injeção de código. Em uma aplicação real, considere usar bibliotecas que sanitizam e preparam as consultas SQL adequadamente.
+5. **Mock de Banco de Dados**: O método `getContracts` simula uma busca no banco de dados. Na prática, essa função deve realizar a consulta ao banco utilizando uma biblioteca segura para evitar SQL Injection.
+
+### Testando a API com Postman
+
+Para testar:
+
+1. **Realize o login** no endpoint `/api/auth/login` com um dos usuários (`username: admin, password: 123456789`).
+2. **Recupere o token** da resposta de login e use-o no cabeçalho `Authorization` de outras requisições:
+   ```
+   Authorization: Bearer <token>
+   ```
+3. **Acesse os endpoints**:
+   - `/api/users` (somente admin).
+   - `/api/contracts/<empresa>/<inicio>` (somente admin).
+   - `/api/auth/me` (qualquer usuário logado).
+
+### Conclusão
+
+Com essa refatoração, a aplicação agora:
+
+- Utiliza **tokens JWT** para autenticação e validação de sessões de forma segura.
+- Realiza **controle de acesso baseado em perfil** para restringir endpoints específicos.
+- Sanitiza as entradas no endpoint de contratos, prevenindo injeções.
+  
+Essa abordagem torna o sistema mais seguro e menos suscetível a exploração de vulnerabilidades.
