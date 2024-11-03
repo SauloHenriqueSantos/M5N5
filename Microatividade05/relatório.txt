@@ -1,0 +1,26 @@
+Relatório do Código
+
+1.Expressão Regular: A função sanitizeAndRedirect usa uma expressão regular (/[\r\n]/) para detectar qualquer ocorrência de caracteres CRLF (\r ou \n) no parâmetro url. Se forem encontrados, o código retorna uma resposta de erro 400 com a mensagem URL inválida.
+
+2.Verificação do Domínio: Usando a classe URL, o código cria um objeto URL a partir do valor recebido. Se o domínio (hostname) do URL não termina com o domínio permitido (dominio.com), o redirecionamento é impedido e uma mensagem de erro é enviada.
+
+3.Redirecionamento Seguro: Se a URL passa nas verificações (sem caracteres CRLF e pertence ao domínio permitido), o usuário é redirecionado com res.redirect().
+
+4.Tratamento de Erros: Se o parâmetro url estiver ausente ou for inválido, uma resposta de erro 400 é enviada com uma mensagem informativa
+
+
+
+Testando o Código
+
+Inicie o servidor com o comando:
+
+node app.js
+
+
+Testar com URLs válidas e inválidas:
+
+Tente acessar http://localhost:3000/redirect?url=http://dominio.com/pagina — o redirecionamento deve funcionar.
+Tente acessar http://localhost:3000/redirect?url=http://sitefake-malicioso.com/ — o redirecionamento deve ser bloqueado.
+Tente acessar http://localhost:3000/redirect?url=http://dominio.com/%0D%0AContent-Length:%200%0D%0A%0D%0A — o redirecionamento deve ser bloqueado por injeção de CRLF.
+Conclusão
+Esse código é seguro contra ataques de CRLF Injection e redirecionamento para domínios externos. Ao usar uma expressão regular para sanitizar a URL e verificar o domínio, garantimos que o redirecionamento ocorra de maneira segura..

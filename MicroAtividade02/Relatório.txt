@@ -1,0 +1,22 @@
+Relatório das Mudanças e Tratativas de Segurança
+
+1 Comprimento Mínimo da Senha:
+
+Foi adicionado o parâmetro MIN_PASSWORD_LENGTH, que define um mínimo de 8 caracteres para a senha.
+O código verifica se a senha atende ao comprimento mínimo e, se não, retorna um erro específico.
+
+2 Permissão para Qualquer Caractere na Senha:
+
+A verificação IS_NUMERIC(password) foi removida para que o usuário possa usar qualquer caractere como senha.
+
+3 Limite de Tentativas de Login:
+
+A variável MAX_LOGIN_ATTEMPTS define o número máximo de tentativas de login permitidas.
+Cada vez que o usuário falha em uma tentativa, login_attempts é incrementado.
+Quando o número de tentativas chega ao limite, uma mensagem de erro específica é exibida.
+
+4 Mensagem de Erro Genérica:
+
+Ao invés de informar se o erro está na senha ou no nome de usuário, uma mensagem de erro genérica é retornada: "Usuário ou senha incorretos."
+
+Esse código implementa boas práticas de segurança, limitando tentativas e melhorando o tratamento de erros para evitar o vazamento de informações sobre credenciais inválidas.
